@@ -18,12 +18,14 @@
     <h2>Letras chutadas</h2>
     <div id="letras-chutadas"></div>
     <div id="mensagem">Você ganhou ebaaaa!!</div><br>
-    <button id="botao-reiniciar">Recomeçar</button>
+    <div style="text-align: center;">
+        <button id="botao-reiniciar" onclick="iniciarJogo()">Recomeçar</button>
+    </div>
 
 <!--Lógica JavaScript-->
 <script>
     // Lista de palavras para o jogo
-    const listaPalavras = ['javascript', 'html', 'css', 'youtube'];
+    const listaPalavras = ['javascript', 'maçã', 'maçã', 'maçã'];
     let palavraEscolhida;
     let exibicaoPalavra;
     let letrasChutadas; 
@@ -33,6 +35,12 @@
 
     // Função para iniciar o jogo
     function iniciarJogo(){
+
+
+        document.getElementById('botao-reiniciar').style.display='none'
+        document.getElementById('entrada-letra').disabled = false; 
+
+
         // Escolher uma palavra aleatória da lista
         palavraEscolhida = listaPalavras[Math.floor(Math.random()*listaPalavras.length)];
         console.log(palavraEscolhida); 
@@ -58,6 +66,7 @@
         document.getElementById("exibicao-palavra").innerText = exibicaoPalavra.join(' ');
         document.getElementById("letras-chutadas").innerText = `${letrasChutadas.join(', ')}`;
 
+        document.getElementById('mensagem').innerText='';
         document.getElementById("imagem").src = `img/forca${numeroErros}.png`;
 
         // Verificar se o jogo terminou
@@ -85,11 +94,20 @@
         letrasChutadas.push(letra);
 
         if (palavraEscolhida.includes(letra)){
-            for (let i=0; i< palavraEscolhida.length;i++);
-            if(palavraEscolhida[i] === letra){
-                exibicaoPalavra[i] = letra;
+            for (let i=0; i< palavraEscolhida.length;i++){
+                if(palavraEscolhida[i] === letra){
+                    exibicaoPalavra[i] = letra;
+                }
             }
+        }else{
+            tentativasRestantes--;
+            numeroErros++;
         }
+
+entradaLetra.value = '';
+
+atualizarExibicao();
+
     }
 
     function encerrarJogo(mensagem){
@@ -97,7 +115,8 @@
         document.getElementById('entrada-letra').disabled = true; 
 
         // Exibir a mensagem
-        document.getElementById('mensagem').innerText = 'mensagem';
+        document.getElementById('mensagem').style.display= 'block';
+        document.getElementById('mensagem').innerText = mensagem;
 
         // Exibir o botão de reiniciar
         document.getElementById('botao-reiniciar').style.display = 'block';
@@ -110,5 +129,3 @@
 </body>
 </html>
 
-
-<!--PAREI  EM 43:00-->
